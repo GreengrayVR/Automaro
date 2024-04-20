@@ -1,0 +1,3 @@
+[submodule "CMDGraphics"]
+	path = CMDGraphics
+	url = https://github.com/kerrytazi/CMDGraphics.git
