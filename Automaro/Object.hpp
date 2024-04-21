@@ -2,22 +2,13 @@
 
 class World;
 
-class Object
+class Object : public ComponentContainer
 {
 public:
 	virtual ~Object();
 
 	Object(World* world, bool solid = false);
 
-	template <typename T>
-	T* FindComponent()
-	{
-		for (auto& component : components)
-			if (auto c = dynamic_cast<T*>(component.get()))
-				return c;
-
-		return nullptr;
-	}
 
 	World* GetWorld() const;
 	bool IsSolid();
@@ -30,5 +21,4 @@ private:
 	Transform m_Transform;
 	bool m_bSolid;
 	World* m_pWorld;
-	std::vector<std::unique_ptr<IComponent>> components;
 };

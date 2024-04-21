@@ -13,6 +13,7 @@ public:
 	void Update(float deltaTime);
 	size_t GetWdith() const;
 	size_t GetHeight() const;
+	std::vector<IPlaceable*>& GetPlaceables();
 	Object* AddObject(std::unique_ptr<Object> object, const Vector& pos);
 	IPlaceable* AddPlaceable(std::unique_ptr<IPlaceable> object, const Vector& pos);
 
@@ -28,7 +29,7 @@ public:
 	std::unique_ptr<Object> Release(const Vector& pos, int slot);
 
 private:
-	std::vector<IPlaceable*> m_vMachines;
+	std::vector<IPlaceable*> m_vPlaceable;
 	std::unique_ptr<size_t> m_sWidth;
 	std::unique_ptr<size_t> m_sHeight;
 	Terrain m_Terrain;

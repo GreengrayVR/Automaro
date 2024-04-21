@@ -9,10 +9,3 @@ IMachine::IMachine(World* world, std::string name, int count)
 IMachine::~IMachine()
 {
 }
-
-bool IMachine::Place(const Vector& pos)
-{
-	//GetWorld()->GetPlayer()->GetTransform().GetPosition();
-
-	return false;
-}

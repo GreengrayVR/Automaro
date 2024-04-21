@@ -37,6 +37,7 @@
 #include "InputManager.hpp"
 #include "Game.hpp"
 #include "IPlaceable.hpp"
+#include "Ore.hpp"
 #include "IMachine.hpp"
 #include "Miner.hpp"
 #include "MachineManager.hpp"

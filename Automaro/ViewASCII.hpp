@@ -11,6 +11,8 @@ public:
 	int GetPriority() const;
 	void SetPriority(int priority);
 
+	std::unique_ptr<IComponent> Clone() const override;
+
 private:
 	char m_cRepresentation;
 	int m_iPriority;

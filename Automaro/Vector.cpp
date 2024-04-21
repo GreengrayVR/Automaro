@@ -11,10 +11,16 @@ Vector::Vector(int _x, int _y)
 {
 }
 
-void Vector::operator+=(const Vector& other)
+Vector& Vector::operator+=(const Vector& other)
 {
 	x += other.x;
 	y += other.y;
+	return *this;
+}
+
+Vector Vector::operator+(const Vector& other) const
+{
+	return Vector(*this) += other;
 }
 
 bool operator==(const Vector& lhs, const Vector& rhs)

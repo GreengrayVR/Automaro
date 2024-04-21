@@ -25,7 +25,7 @@ IPlaceable* Map::AddPlaceable(std::unique_ptr<IPlaceable> object, const Vector& 
 	Transform& transform = const_cast<Transform&>(object->GetTransform());
 	transform.SetPosition(pos);
 
-	m_vMachines.emplace_back(object.get());
+	m_vPlaceable.emplace_back(object.get());
 
 	return static_cast<IPlaceable*>(m_Terrain[pos.y][pos.x].emplace_back(std::move(object)).get());
 }
@@ -66,9 +66,9 @@ std::unique_ptr<Object> Map::Release(const Vector& pos, int slot)
 
 void Map::Update(float deltaTime)
 {
-	for (auto& machine : m_vMachines)
+	for (auto& placeable : m_vPlaceable)
 	{
-		machine->Update(deltaTime);
+		placeable->Update(deltaTime);
 	}
 }
 
@@ -80,4 +80,9 @@ size_t Map::GetWdith() const
 size_t Map::GetHeight() const
 {
 	return *m_sHeight;
+}
+
+std::vector<IPlaceable*>& Map::GetPlaceables()
+{
+	return m_vPlaceable;
 }

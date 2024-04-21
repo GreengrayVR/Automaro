@@ -26,3 +26,8 @@ void ViewASCII::SetPriority(int priority)
 {
 	m_iPriority = priority;
 }
+
+std::unique_ptr<IComponent> ViewASCII::Clone() const
+{
+	return std::unique_ptr<IComponent>(new ViewASCII(*this));
+}
