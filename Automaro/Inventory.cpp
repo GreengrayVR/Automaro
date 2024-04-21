@@ -151,7 +151,7 @@ void Inventory::SelectPrev()
 
 	if (m_iSelectedIndex - 1 < 0)
 	{
-		Select(m_vItems.size() - 1);
+		Select((int)m_vItems.size() - 1);
 		return;
 	}
 

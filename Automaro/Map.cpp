@@ -59,9 +59,7 @@ std::unique_ptr<Object> Map::Release(const Vector& pos, int slot)
 	auto object = std::move(m_Terrain[pos.y][pos.x][slot]);
 	m_Terrain[pos.y][pos.x].erase(m_Terrain[pos.y][pos.x].begin() + slot);
 
-	auto it = std::ranges::find(m_vPlaceable, object.get());
-	if (it != m_vPlaceable.end())
-		m_vPlaceable.erase(it);
+	ScheduleRemovePlaceable(object.get());
 
 	Transform& transform = const_cast<Transform&>(object->GetTransform());
 	transform.SetPosition({-1, -1});
@@ -69,12 +67,27 @@ std::unique_ptr<Object> Map::Release(const Vector& pos, int slot)
 	return object;
 }
 
+void Map::ScheduleRemovePlaceable(Object* placeable)
+{
+	auto it = std::ranges::find(m_vPlaceable, placeable);
+	if (it != m_vPlaceable.end())
+		m_vPlaceableRemoveScheduler.push_back(it);
+}
+
+void Map::RemovePlaceables()
+{
+	for (auto& placeable : m_vPlaceableRemoveScheduler)
+		m_vPlaceable.erase(placeable);
+
+	m_vPlaceableRemoveScheduler.clear();
+}
+
 void Map::Update(float deltaTime)
 {
 	for (auto& placeable : m_vPlaceable)
-	{
 		placeable->Update(deltaTime);
-	}
+
+	RemovePlaceables();
 }
 
 size_t Map::GetWdith() const
@@ -90,4 +103,17 @@ size_t Map::GetHeight() const
 std::vector<IPlaceable*>& Map::GetPlaceables()
 {
 	return m_vPlaceable;
+}
+
+IPlaceable* Map::GetPlaceable(const Vector& pos)
+{
+	auto it = std::find_if(
+		m_vPlaceable.begin(),
+		m_vPlaceable.end(),
+		[&pos](IPlaceable* p) {
+			return p->GetTransform().GetPosition() == pos;
+		}
+	);
+
+	return it == m_vPlaceable.end() ? nullptr : *it;
 }
