@@ -2,7 +2,7 @@
 #include "Ore.hpp"
 
 Ore::Ore(World* world, std::string name, int count)
-	: IPlaceable(world, name, count, false)
+	: IPlaceable(world, name + " Ore", count, false)
 {
 }
 

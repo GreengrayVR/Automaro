@@ -17,13 +17,10 @@ float Miner::GetTime() const
 void Miner::Update(float deltaTime)
 {
 	auto pos = GetTransform().GetPosition() + Vector{ 0, 1 };
-	IPlaceable* placeable = GetWorld()->GetMap().GetPlaceable(pos); // TODO: replace with proper function
-
+	IPlaceable* placeable = GetWorld()->GetMap().GetPlaceable(pos);
 	if (!placeable) return;
 
-
 	m_fTime -= deltaTime;
-
 	if (m_fTime < 0)
 	{
 

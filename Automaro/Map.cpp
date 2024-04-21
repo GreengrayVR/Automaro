@@ -40,6 +40,11 @@ void Map::Move(Object* object, const Vector& pos)
 	Vector oldPos = object->GetTransform().GetPosition();
 
 	auto& cells = m_Terrain[oldPos.y][oldPos.x];
+	auto& newCells = m_Terrain[pos.y][pos.x];
+
+	for (auto& cell : newCells)
+		if (cell.get()->IsSolid())
+			return;
 
 	for (int i = 0; i < cells.size(); i++)
 	{
