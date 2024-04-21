@@ -4,6 +4,7 @@
 Miner::Miner(World* world, float miningSpeed)
 	: IMachine(world, "Miner", 1)
 	, m_fMiningSpeed(miningSpeed)
+	, m_fTime(miningSpeed)
 {
 	FindComponent<ViewASCII>()->SetRepresentation('M');
 }

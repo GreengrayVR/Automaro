@@ -10,4 +10,5 @@ public:
 private:
 
 	float m_fMiningSpeed;
+	float m_fTime;
 };

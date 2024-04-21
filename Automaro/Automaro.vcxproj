@@ -133,6 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Common.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="IMachine.cpp" />
     <ClCompile Include="IComponent.cpp" />
@@ -184,6 +185,11 @@
     <ClInclude Include="Vector.hpp" />
     <ClInclude Include="ViewASCII.hpp" />
     <ClInclude Include="World.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CMDGraphics\CMDGraphics\CMDGraphics.vcxproj">
+      <Project>{9f616041-951c-45c1-bfe0-fad9823e469d}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -11,6 +11,9 @@
 #include <thread>
 #include <cassert>
 #include <stack>
+#include <string>
+#include <locale>
+#include <codecvt>
 
 #include "../CMDGraphics/CMDGraphics/CMDGraphics.hpp"
 

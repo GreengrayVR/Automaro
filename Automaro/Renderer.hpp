@@ -4,14 +4,14 @@ class Renderer
 {
 public:
 
-	void Draw(World& world, float deltaTime) const;
+	void Draw(World& world, float deltaTime);
 
 private:
-	bool DrawDebug(World& world, float deltaTime) const;
-	bool DrawPopup(World& world, float deltaTime) const;
-	bool DrawTerrain(World& world) const;
-	bool DrawTooltip(World& world) const;
-	bool DrawInventory(World& world) const;
-
-	void DrawItem(Item* item) const;
+	bool DrawDebug(CMDGraphics::Frame& frame, World& world, float deltaTime) const;
+	bool DrawPopup(CMDGraphics::Frame& frame, World& world, float deltaTime) const;
+	bool DrawTerrain(CMDGraphics::Frame& frame, World& world) const;
+	bool DrawTooltip(CMDGraphics::Frame& frame, World& world) const;
+	bool DrawInventory(CMDGraphics::Frame& frame, World& world) const;
+	
+	CMDGraphics::Graphics m_Gfx;
 };
