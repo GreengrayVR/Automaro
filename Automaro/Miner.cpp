@@ -29,13 +29,20 @@ void Miner::Update(float deltaTime)
 			{
 				if (m_ItemOutput)
 				{
-					m_ItemOutput->Transfer(placeable, 1);
+					if (!m_ItemOutput->Transfer(placeable, 1)) // TODO: reverse transfer
+					{
+						(void)GetWorld()->GetMap().Release(placeable->GetTransform().GetPosition(), 0);
+					}
 				}
 				else
 				{
 					m_ItemOutput = std::unique_ptr<Ore>(new Ore(*static_cast<Ore*>(placeable)));
 					m_ItemOutput->SetCount(0);
 					m_ItemOutput->Transfer(placeable, 1);
+					if (!m_ItemOutput->Transfer(placeable, 1))
+					{
+						(void)GetWorld()->GetMap().Release(placeable->GetTransform().GetPosition(), 0);
+					}
 				}
 			}
 		}

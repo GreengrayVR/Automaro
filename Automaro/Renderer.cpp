@@ -71,7 +71,7 @@ bool Renderer::DrawTerrain(CMDGraphics::Frame& frame, World& world) const
 			}
 			else
 			{
-				int tempPriority = -9999999999;
+				int tempPriority = -9999;
 				char representation = '.';
 
 				for (size_t i = 0; i < objects.size(); i++)

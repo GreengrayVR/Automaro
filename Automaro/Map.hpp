@@ -26,6 +26,7 @@ public:
 	}
 	
 	void Move(Object* object, const Vector& pos);
+	[[nodiscard]]
 	std::unique_ptr<Object> Release(const Vector& pos, int slot);
 
 private:

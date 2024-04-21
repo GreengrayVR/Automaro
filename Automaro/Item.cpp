@@ -44,5 +44,5 @@ bool Item::Transfer(Item* item, int count)
 {
 	m_iCount += count;
 	item->SetCount(item->GetCount() - count);
-	return item->GetCount() <= 0;
+	return item->GetCount() > 0;
 }

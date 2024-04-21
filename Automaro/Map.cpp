@@ -53,10 +53,15 @@ void Map::Move(Object* object, const Vector& pos)
 	assert(false && "Object has to be on map");
 }
 
+[[nodiscard]]
 std::unique_ptr<Object> Map::Release(const Vector& pos, int slot)
 {
 	auto object = std::move(m_Terrain[pos.y][pos.x][slot]);
 	m_Terrain[pos.y][pos.x].erase(m_Terrain[pos.y][pos.x].begin() + slot);
+
+	auto it = std::ranges::find(m_vPlaceable, object.get());
+	if (it != m_vPlaceable.end())
+		m_vPlaceable.erase(it);
 
 	Transform& transform = const_cast<Transform&>(object->GetTransform());
 	transform.SetPosition({-1, -1});
