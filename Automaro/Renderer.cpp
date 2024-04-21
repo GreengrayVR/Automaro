@@ -1,12 +1,6 @@
 #include "pch.hpp"
 #include "Renderer.hpp"
 
-
-void Write(CMDGraphics::Frame& frame, const std::string& text)
-{
-	frame.Write(text.c_str());
-}
-
 void Renderer::Draw(World& world, float deltaTime)
 {
 	CMDGraphics::Frame frame(m_Gfx);
@@ -24,7 +18,7 @@ void Renderer::Draw(World& world, float deltaTime)
 
 bool Renderer::DrawDebug(CMDGraphics::Frame& frame, World& world, float deltaTime) const
 {
-	Write(frame, (std::stringstream() << "FPS: " << int(1.f / deltaTime) << "\n\n").str());
+	frame.WriteF("FPS: {}\n\n", int(1.f / deltaTime));
 	return true;
 }
 
@@ -36,30 +30,26 @@ bool Renderer::DrawPopup(CMDGraphics::Frame& frame, World& world, float deltaTim
 
 	if (!popupManager.IsVisible()) return true;
 
-	std::stringstream draw_text;
-	draw_text << "Popup:\n";
+	frame.WriteF("Popup:\n");
 
 	for (const auto& text : textToShow)
-	{
-		draw_text << text.first << " (" << std::format("{:.2f}", text.second) << " sec)" << '\n';
-	}
-	draw_text << "\n\n";
-	Write(frame, draw_text.str());
+		frame.WriteF("{} ({:.2f} sec)\n", text.first, text.second);
+
+	frame.WriteF("\n\n");
 	return true;
 }
 
 bool Renderer::DrawTerrain(CMDGraphics::Frame& frame, World& world) const
 {
-	std::stringstream draw_text;
-	draw_text << "Keys:\n";
-	draw_text << "WASD: Move | Q: Pickup | E: Inventory\n\n";
+	frame.WriteF("Keys:\n");
+	frame.WriteF("WASD: Move | Q: Pickup | E: Inventory\n\n");
 
 	Map& map = world.GetMap();
 
 
 	for (int y = 0; y < map.GetHeight(); y++)
 	{
-		draw_text << "\n";
+		frame.WriteF("\n");
 
 		for (int x = 0; x < map.GetWdith(); x++)
 		{
@@ -67,7 +57,7 @@ bool Renderer::DrawTerrain(CMDGraphics::Frame& frame, World& world) const
 
 			if (objects.size() == 0)
 			{
-				draw_text << "_";
+				frame.WriteF("_");
 			}
 			else
 			{
@@ -84,12 +74,11 @@ bool Renderer::DrawTerrain(CMDGraphics::Frame& frame, World& world) const
 					}
 				}
 
-				draw_text << representation;
+				frame.Write(representation);
 			}
 		}
 	}
-	draw_text << "\n\n";
-	Write(frame, draw_text.str());
+	frame.WriteF("\n\n");
 	return true;
 }
 
@@ -101,18 +90,22 @@ bool Renderer::DrawTooltip(CMDGraphics::Frame& frame, World& world) const
 
 	bool drawed = false;
 
-	std::stringstream draw_text;
+	
 	while (it.Next())
 	{
 		if (!drawed)
-			draw_text << "You are looking at:\n";
+			frame.WriteF("You are looking at:\n");
 		
-		draw_text << it.Get()->GetName() << " [" << it.Get()->GetCount() << "]" << (it.Get()->IsPlaceable() ? " [M]" : "") << "\n";
+		frame.WriteF(
+			"{} [{}] {}\n", 
+			it.Get()->GetName(), 
+			it.Get()->GetCount(), 
+			(it.Get()->IsPlaceable() ? " [M]" : "")
+		);
 		drawed = true;
 	}
 
-	if (drawed) draw_text << "\n\n";
-	Write(frame, draw_text.str());
+	if (drawed) frame.WriteF("\n\n");
 	return true;
 }
 
@@ -123,22 +116,24 @@ bool Renderer::DrawInventory(CMDGraphics::Frame& frame, World& world) const
 
 	auto& items = inventory.GetItems();
 	auto selected = inventory.GetSelected();
+	
+	frame.WriteF("Keys:\n");
+	frame.WriteF("W: Up | S: Down | D: Drop | C: Exit | A: Place Machine\n\n");
 
-	std::stringstream draw_text;
-	draw_text << "Keys:\n";
-	draw_text << "W: Up | S: Down | D: Drop | C: Exit | A: Place Machine\n\n";
-
-	draw_text << "Inventory " << inventory.GetItems().size() << " item(s):\n\n";
-
+	frame.WriteF("Inventory {} item(s):\n\n", inventory.GetItems().size());
 
 	for (int i = 0; i < items.size(); i++)
 	{
 		if (selected.first == i)
-			draw_text << "> ";
+			frame.WriteF("> ");
 
-		draw_text << items[i]->GetName() << " [" << items[i]->GetCount() << "]" << (items[i]->IsPlaceable() ? " [M]" : "") << "\n";
+		frame.WriteF(
+			"{} [{}] {}\n",
+			items[i]->GetName(),
+			items[i]->GetCount(),
+			(items[i]->IsPlaceable() ? " [M]" : "")
+		);
 	}
-	draw_text << "\n\n";
-	Write(frame, draw_text.str());
+	frame.WriteF("\n\n");
 	return true;
 }
