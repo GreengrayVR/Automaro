@@ -95,13 +95,43 @@ bool Renderer::DrawTooltip(CMDGraphics::Frame& frame, World& world) const
 	{
 		if (!drawed)
 			frame.WriteF("You are looking at:\n");
-		
+
+		IMachine* machine = dynamic_cast<IMachine*>(it.Get());
+		Ore* ore = dynamic_cast<Ore*>(it.Get());
+
+		std::string type;
+		if (machine)
+			type = "Machine";
+		else if (ore)
+			type = "Ore";
+
 		frame.WriteF(
-			"{} [{}] {}\n", 
+			"{} ({}) [{}]\n", 
+			type,
 			it.Get()->GetName(), 
-			it.Get()->GetCount(), 
-			(it.Get()->IsPlaceable() ? " [M]" : "")
+			it.Get()->GetCount()
 		);
+
+		if (machine)
+		{
+			frame.WriteF("Completed [{:.2f}/{:.2f}]\n", machine->GetTime(), machine->GetTimeToComplete());
+
+			if (Miner* miner = dynamic_cast<Miner*>(machine))
+			{
+				Ore* output = miner->GetOreOutput();
+				if (output)
+				{
+					frame.WriteF("Ore inside of Miner:\n");
+					frame.WriteF(
+						"{} [{}]\n",
+						output->GetName(),
+						output->GetCount()
+					);
+
+				}			
+			}
+		}
+
 		drawed = true;
 	}
 

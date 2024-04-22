@@ -16,7 +16,7 @@ void World::Populate()
 	m_pPlayer->GetInventory().Add(std::make_unique<Item>(this, "Gold Ingot", 1));
 	m_pPlayer->GetInventory().Add(std::make_unique<Miner>(this, 5.f));
 
-	GetMap().AddPlaceable(std::make_unique<Ore>(this, "Iron", 2), { 3 , 7 });
+	GetMap().AddPlaceable(std::make_unique<Ore>(this, "Iron", 5), { 3 , 7 });
 }
 
 void World::Update(float deltaTime)

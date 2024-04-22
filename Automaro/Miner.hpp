@@ -5,13 +5,14 @@ class Miner : public IMachine
 public:
 	Miner(World* world, float miningSpeed);
 
-	float GetTime() const;
 
-	void Update(float deltaTime) override;
+	void EarlyUpdate() override;
+	void OnComplete() override;
+	void LateUpdate() override;
+
+	Ore* GetOreOutput();
 
 private:
-	std::unique_ptr<Ore> m_ItemOutput;
-
-	float m_fMiningSpeed;
-	float m_fTime;
+	std::unique_ptr<Ore> m_OreOutput;
+	Ore* m_OreInput;
 };
