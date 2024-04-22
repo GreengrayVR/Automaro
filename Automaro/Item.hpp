@@ -12,6 +12,7 @@ public:
 	std::string GetName() const;
 	bool IsPlaceable() const;
 	bool IsPickupable() const;
+	void SetPickupable(bool pickupable);
 	bool Transfer(Item* item, int count);
 
 private:

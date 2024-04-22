@@ -76,6 +76,12 @@ bool Inventory::PickUp()
 
 	if (it.Next())
 	{
+		if (!it.Get()->IsPickupable())
+		{
+			m_pPlayer->GetWorld()->GetGame()->GetPopupManager().ShowText("Item can't be picked up!");
+			return false;
+		}
+
 		Add(it.Release());
 		m_pPlayer->GetWorld()->GetGame()->GetPopupManager().ShowText("Item picked up!");
 		return true;

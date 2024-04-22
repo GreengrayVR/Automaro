@@ -40,6 +40,11 @@ bool Item::IsPickupable() const
 	return m_bPickupable;
 }
 
+void Item::SetPickupable(bool pickupable)
+{
+	m_bPickupable = pickupable;
+}
+
 bool Item::Transfer(Item* item, int count)
 {
 	m_iCount += count;

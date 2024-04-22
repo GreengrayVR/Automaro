@@ -47,6 +47,8 @@ void IMachine::SetRunning(bool running)
 	{
 		m_fTime = m_fTimeToComplete;
 	}
+
+	SetPickupable(!m_bIsRunning);
 }
 
 bool IMachine::IsRunning() const
