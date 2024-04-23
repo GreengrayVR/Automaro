@@ -76,6 +76,12 @@
     <ClCompile Include="Ore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="IPipe.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemPipe.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.hpp">
@@ -153,5 +159,9 @@
     <ClInclude Include="Ore.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="IPipe.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemPipe.hpp" />
   </ItemGroup>
 </Project>

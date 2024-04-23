@@ -39,7 +39,7 @@ bool Inventory::Drop(int slot)
 
 	const auto& pos = m_pPlayer->GetTransform().GetPosition();
 	std::unique_ptr<Item> item = Release(slot);
-	m_pPlayer->GetWorld()->GetGame()->GetPopupManager().ShowText(MakeString("Item [", item.get()->GetName(), "] (", item.get()->GetCount(), ") dropped"));
+	m_pPlayer->GetWorld()->GetGame()->GetPopupManager().ShowText(std::format("Item [{}] ({}) dropped", item.get()->GetName(), item.get()->GetCount()));
 	m_pPlayer->GetWorld()->GetMap().AddObject(std::move(item), pos);
 	return true;
 }
@@ -60,7 +60,7 @@ bool Inventory::Place(int slot)
 
 	const auto& pos = m_pPlayer->GetTransform().GetPosition();
 	std::unique_ptr<Item> item = Release(slot);
-	m_pPlayer->GetWorld()->GetGame()->GetPopupManager().ShowText(MakeString("Machine [", item.get()->GetName(), "] (", item.get()->GetCount(), ") placed"));
+	m_pPlayer->GetWorld()->GetGame()->GetPopupManager().ShowText(std::format("Machine [{}] ({}) placed", item.get()->GetName(), item.get()->GetCount()));
 	
 	std::unique_ptr<IPlaceable> placeable(static_cast<IPlaceable*>(item.release()));
 	m_pPlayer->GetWorld()->GetMap().AddPlaceable(std::move(placeable), pos);

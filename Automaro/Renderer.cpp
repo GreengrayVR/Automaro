@@ -1,6 +1,11 @@
 #include "pch.hpp"
 #include "Renderer.hpp"
 
+using Color = CMDGraphics::Color;
+
+using FGColor = Color::Foreground;
+using BGColor = Color::Background;
+
 void Renderer::Draw(World& world, float deltaTime)
 {
 	CMDGraphics::Frame frame(m_Gfx);

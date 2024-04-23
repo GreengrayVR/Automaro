@@ -107,6 +107,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -124,6 +125,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -133,6 +135,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="IPipe.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="IMachine.cpp" />
     <ClCompile Include="IComponent.cpp" />
@@ -142,6 +145,7 @@
     <ClCompile Include="IPlaceable.cpp" />
     <ClCompile Include="IPlacebale.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemPipe.cpp" />
     <ClCompile Include="MachineManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -162,6 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.hpp" />
+    <ClInclude Include="IPipe.hpp" />
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="IMachine.hpp" />
     <ClInclude Include="IComponent.hpp" />
@@ -170,6 +175,7 @@
     <ClInclude Include="Inventory.hpp" />
     <ClInclude Include="IPlaceable.hpp" />
     <ClInclude Include="Item.hpp" />
+    <ClInclude Include="ItemPipe.hpp" />
     <ClInclude Include="IView.hpp" />
     <ClInclude Include="Key.hpp" />
     <ClInclude Include="MachineManager.hpp" />

@@ -25,7 +25,7 @@ IPlaceable* Map::AddPlaceable(std::unique_ptr<IPlaceable> object, const Vector& 
 	Transform& transform = const_cast<Transform&>(object->GetTransform());
 	transform.SetPosition(pos);
 
-	m_vPlaceable.emplace_back(object.get());
+	m_vPlaceable.emplace_back(object.get())->OnPlace();
 
 	return static_cast<IPlaceable*>(m_Terrain[pos.y][pos.x].emplace_back(std::move(object)).get());
 }
@@ -81,6 +81,8 @@ void Map::ScheduleRemovePlaceable(Object* placeable)
 
 void Map::RemovePlaceables()
 {
+	if (m_vPlaceableRemoveScheduler.empty()) return;
+
 	for (auto& placeable : m_vPlaceableRemoveScheduler)
 		m_vPlaceable.erase(placeable);
 

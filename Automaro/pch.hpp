@@ -41,3 +41,5 @@
 #include "IMachine.hpp"
 #include "Miner.hpp"
 #include "MachineManager.hpp"
+#include "IPipe.hpp"
+#include "ItemPipe.hpp"

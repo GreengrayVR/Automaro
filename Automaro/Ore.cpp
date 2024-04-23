@@ -9,3 +9,7 @@ Ore::Ore(World* world, std::string name, int count)
 void Ore::Update(float deltaTime)
 {
 }
+
+void Ore::OnPlace()
+{
+}

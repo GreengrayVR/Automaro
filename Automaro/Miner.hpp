@@ -9,6 +9,7 @@ public:
 	void EarlyUpdate() override;
 	void OnComplete() override;
 	void LateUpdate() override;
+	void OnPlace() override;
 
 	Ore* GetOreOutput();
 

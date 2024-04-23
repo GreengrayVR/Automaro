@@ -3,6 +3,7 @@
 
 Miner::Miner(World* world, float miningSpeed)
 	: IMachine(world, "Miner", 1, miningSpeed)
+	, m_OreInput(nullptr)
 {
 	FindComponent<ViewASCII>()->SetRepresentation('M');
 }
@@ -36,6 +37,10 @@ void Miner::OnComplete()
 }
 
 void Miner::LateUpdate()
+{
+}
+
+void Miner::OnPlace()
 {
 }
 
