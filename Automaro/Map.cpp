@@ -91,8 +91,9 @@ void Map::RemovePlaceables()
 
 void Map::Update(float deltaTime)
 {
-	for (auto& placeable : m_vPlaceable)
-		placeable->Update(deltaTime);
+	for (auto placeable : m_vPlaceable)
+		if (IWorkable* workable = dynamic_cast<IWorkable*>(placeable))
+			workable->Update(deltaTime);
 
 	RemovePlaceables();
 }

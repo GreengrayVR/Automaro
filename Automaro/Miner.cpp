@@ -3,37 +3,38 @@
 
 Miner::Miner(World* world, float miningSpeed)
 	: IMachine(world, "Miner", 1, miningSpeed)
-	, m_OreInput(nullptr)
 {
 	FindComponent<ViewASCII>()->SetRepresentation('M');
 }
 
 void Miner::EarlyUpdate()
 {
-	auto pos = GetTransform().GetPosition() + Vector{ 0, 1 };
+	auto pos = GetTransform().GetPosition() + Vector::Down();
 	IPlaceable* placeable = GetWorld()->GetMap().GetPlaceable(pos);
-	m_OreInput = dynamic_cast<Ore*>(placeable);
-	SetRunning(m_OreInput != nullptr);
+	m_MinedItem = dynamic_cast<Item*>(placeable);
+	SetRunning(m_MinedItem != nullptr);
 }
 
 void Miner::OnComplete()
 {
-	if (m_OreOutput)
+	if (m_ItemOutput)
 	{
-		if (!m_OreOutput->Transfer(m_OreInput, 1)) // TODO: reverse transfer
+		if (!m_ItemOutput->Transfer(m_MinedItem, 1)) // TODO: reverse transfer
 		{
-			(void)GetWorld()->GetMap().Release(m_OreInput->GetTransform().GetPosition(), 0);
+			(void)GetWorld()->GetMap().Release(m_MinedItem->GetTransform().GetPosition(), 0);
 		}
 	}
 	else
 	{
-		m_OreOutput = std::unique_ptr<Ore>(new Ore(*static_cast<Ore*>(m_OreInput)));
-		m_OreOutput->SetCount(0);
-		if (!m_OreOutput->Transfer(m_OreInput, 1))
+		m_ItemOutput = std::unique_ptr<Item>(new Item(*m_MinedItem));
+		m_ItemOutput->SetCount(0);
+		if (!m_ItemOutput->Transfer(m_MinedItem, 1))
 		{
-			(void)GetWorld()->GetMap().Release(m_OreInput->GetTransform().GetPosition(), 0);
+			(void)GetWorld()->GetMap().Release(m_MinedItem->GetTransform().GetPosition(), 0);
 		}
 	}
+
+	TransferOutput(1);
 }
 
 void Miner::LateUpdate()
@@ -42,9 +43,10 @@ void Miner::LateUpdate()
 
 void Miner::OnPlace()
 {
+	Reset();
 }
 
-Ore* Miner::GetOreOutput()
+void Miner::OnPickup()
 {
-	return m_OreOutput.get();
+	GetWorld()->GetMap().ScheduleRemovePlaceable(this);
 }

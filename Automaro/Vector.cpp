@@ -23,6 +23,26 @@ Vector Vector::operator+(const Vector& other) const
 	return Vector(*this) += other;
 }
 
+Vector Vector::Down()
+{
+	return Vector(0, 1);
+}
+
+Vector Vector::Up()
+{
+	return Vector(0, -1);
+}
+
+Vector Vector::Left()
+{
+	return Vector(-1, 0);
+}
+
+Vector Vector::Right()
+{
+	return Vector(1, 0);
+}
+
 bool operator==(const Vector& lhs, const Vector& rhs)
 {
 	return lhs.x == rhs.x && lhs.y == rhs.y;

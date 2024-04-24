@@ -10,7 +10,6 @@ Game::Game(size_t map_width, size_t map_height)
 bool Game::Update(float deltaTime)
 {
 	m_InputManager.Update(deltaTime);
-	m_MachineManager.Update(deltaTime);
 	m_World.Update(deltaTime);
 	m_PopupManager.Update(deltaTime);
 	m_Renderer.Draw(m_World, deltaTime);
@@ -46,9 +45,4 @@ InputManager& Game::GetInputManager()
 PopupManager& Game::GetPopupManager()
 {
 	return m_PopupManager;
-}
-
-MachineManager& Game::GetMachineManager()
-{
-	return m_MachineManager;
 }

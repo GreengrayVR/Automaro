@@ -64,9 +64,6 @@
     <ClCompile Include="Miner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MachineManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="IPlacebale.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -80,6 +77,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ItemPipe.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IWorkable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -150,9 +150,6 @@
     <ClInclude Include="Common.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="MachineManager.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="IPlaceable.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -163,5 +160,8 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="ItemPipe.hpp" />
+    <ClInclude Include="IWorkable.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

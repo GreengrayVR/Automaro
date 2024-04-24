@@ -107,7 +107,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -146,7 +146,7 @@
     <ClCompile Include="IPlacebale.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemPipe.cpp" />
-    <ClCompile Include="MachineManager.cpp" />
+    <ClCompile Include="IWorkable.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Miner.cpp" />
@@ -177,8 +177,8 @@
     <ClInclude Include="Item.hpp" />
     <ClInclude Include="ItemPipe.hpp" />
     <ClInclude Include="IView.hpp" />
+    <ClInclude Include="IWorkable.hpp" />
     <ClInclude Include="Key.hpp" />
-    <ClInclude Include="MachineManager.hpp" />
     <ClInclude Include="Map.hpp" />
     <ClInclude Include="Miner.hpp" />
     <ClInclude Include="Object.hpp" />

@@ -1,5 +1,4 @@
 #pragma once
-#include "MachineManager.hpp"
 
 using Terrain = std::vector<std::vector<std::vector<std::unique_ptr<Object>>>>;
 
@@ -30,13 +29,14 @@ public:
 	[[nodiscard]]
 	std::unique_ptr<Object> Release(const Vector& pos, int slot);
 
-private:
 	void ScheduleRemovePlaceable(Object* placeable);
+
+private:
 	void RemovePlaceables();
 
 	std::vector<std::vector<IPlaceable*>::iterator> m_vPlaceableRemoveScheduler;
-
 	std::vector<IPlaceable*> m_vPlaceable;
+
 	std::unique_ptr<size_t> m_sWidth;
 	std::unique_ptr<size_t> m_sHeight;
 	Terrain m_Terrain;

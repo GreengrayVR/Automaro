@@ -1,19 +1,17 @@
 #pragma once
+#include "IWorkable.hpp"
 
 class Miner : public IMachine
 {
 public:
 	Miner(World* world, float miningSpeed);
-
-
+	
+	void OnPlace() override;
+	void OnPickup() override;
 	void EarlyUpdate() override;
 	void OnComplete() override;
 	void LateUpdate() override;
-	void OnPlace() override;
-
-	Ore* GetOreOutput();
 
 private:
-	std::unique_ptr<Ore> m_OreOutput;
-	Ore* m_OreInput;
+	Item* m_MinedItem;
 };

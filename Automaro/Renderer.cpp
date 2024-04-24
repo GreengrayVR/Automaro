@@ -103,12 +103,15 @@ bool Renderer::DrawTooltip(CMDGraphics::Frame& frame, World& world) const
 
 		IMachine* machine = dynamic_cast<IMachine*>(it.Get());
 		Ore* ore = dynamic_cast<Ore*>(it.Get());
+		IPipe* pipe = dynamic_cast<IPipe*>(it.Get());
 
 		std::string type;
 		if (machine)
 			type = "Machine";
 		else if (ore)
 			type = "Ore";
+		else if (ore)
+			type = "Pipe";
 
 		frame.WriteF(
 			"{} ({}) [{}]\n", 
@@ -121,19 +124,28 @@ bool Renderer::DrawTooltip(CMDGraphics::Frame& frame, World& world) const
 		{
 			frame.WriteF("Completed [{:.2f}/{:.2f}]\n", machine->GetTime(), machine->GetTimeToComplete());
 
-			if (Miner* miner = dynamic_cast<Miner*>(machine))
+			Item* output = machine->GetItemOutput();
+			if (output)
 			{
-				Ore* output = miner->GetOreOutput();
-				if (output)
-				{
-					frame.WriteF("Ore inside of Miner:\n");
-					frame.WriteF(
-						"{} [{}]\n",
-						output->GetName(),
-						output->GetCount()
-					);
-
-				}			
+				frame.WriteF("Storage:\n");
+				frame.WriteF(
+					"{} [{}]\n",
+					output->GetName(),
+					output->GetCount()
+				);
+			}
+		}
+		else if (pipe)
+		{
+			Item* input = pipe->GetItemInput();
+			if (input)
+			{
+				frame.WriteF("Storage:\n");
+				frame.WriteF(
+					"{} [{}]\n",
+					input->GetName(),
+					input->GetCount()
+				);
 			}
 		}
 

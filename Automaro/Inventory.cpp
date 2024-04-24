@@ -82,6 +82,9 @@ bool Inventory::PickUp()
 			return false;
 		}
 
+		if (IPlaceable* placeable = dynamic_cast<IPlaceable*>(it.Get()))
+			placeable->OnPickup();
+
 		Add(it.Release());
 		m_pPlayer->GetWorld()->GetGame()->GetPopupManager().ShowText("Item picked up!");
 		return true;
