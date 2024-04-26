@@ -1,11 +1,6 @@
 #include "pch.hpp"
 #include "Renderer.hpp"
 
-using Color = CMDGraphics::Color;
-
-using FGColor = Color::Foreground;
-using BGColor = Color::Background;
-
 void Renderer::Draw(World& world, float deltaTime)
 {
 	CMDGraphics::Frame frame(m_Gfx);
@@ -35,12 +30,14 @@ bool Renderer::DrawPopup(CMDGraphics::Frame& frame, World& world, float deltaTim
 
 	if (!popupManager.IsVisible()) return true;
 
-	frame.WriteF("Popup:\n");
+	int x = frame.Size().x / 2;
+	int y = frame.Size().y / 2;
+
+	frame.WriteF(x, y, "Popup:");
 
 	for (const auto& text : textToShow)
-		frame.WriteF("{} ({:.2f} sec)\n", text.first, text.second);
+		frame.WriteF(x, ++y, "{} ({:.2f} sec)", text.first, text.second);
 
-	frame.WriteF("\n\n");
 	return true;
 }
 
@@ -68,7 +65,7 @@ bool Renderer::DrawTerrain(CMDGraphics::Frame& frame, World& world) const
 			{
 				int tempPriority = -9999;
 				char representation = '.';
-
+				Color color;
 				for (size_t i = 0; i < objects.size(); i++)
 				{
 					auto* view = objects[i]->FindComponent<ViewASCII>();
@@ -76,10 +73,11 @@ bool Renderer::DrawTerrain(CMDGraphics::Frame& frame, World& world) const
 					{
 						tempPriority = view->GetPriority();
 						representation = view->GetRepresentation();
+						color = view->GetBackgroundColor() | view->GetForegroundColor();
 					}
 				}
 
-				frame.Write(representation);
+				frame.Write(color, representation);
 			}
 		}
 	}

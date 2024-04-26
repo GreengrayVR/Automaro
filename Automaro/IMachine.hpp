@@ -3,7 +3,7 @@
 class IMachine : public IPlaceable, public IWorkable
 {
 public:
-	IMachine(World* world, std::string name, int count, int completeTime);
+	IMachine(World* world, const ItemPrefab* prefab, int count, float completeTime);
 	virtual ~IMachine();
 
 };

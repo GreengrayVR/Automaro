@@ -64,7 +64,7 @@ std::unique_ptr<Object> Map::Release(const Vector& pos, int slot)
 	auto object = std::move(m_Terrain[pos.y][pos.x][slot]);
 	m_Terrain[pos.y][pos.x].erase(m_Terrain[pos.y][pos.x].begin() + slot);
 
-	ScheduleRemovePlaceable(object.get());
+	RemovePlaceable(object.get());
 
 	Transform& transform = const_cast<Transform&>(object->GetTransform());
 	transform.SetPosition({-1, -1});
@@ -72,11 +72,15 @@ std::unique_ptr<Object> Map::Release(const Vector& pos, int slot)
 	return object;
 }
 
-void Map::ScheduleRemovePlaceable(Object* placeable)
+void Map::RemovePlaceable(Object* placeable, bool schedule)
 {
 	auto it = std::ranges::find(m_vPlaceable, placeable);
-	if (it != m_vPlaceable.end())
+	if (it == m_vPlaceable.end()) return;
+
+	if (schedule)
 		m_vPlaceableRemoveScheduler.push_back(it);
+	else
+		m_vPlaceable.erase(it);
 }
 
 void Map::RemovePlaceables()

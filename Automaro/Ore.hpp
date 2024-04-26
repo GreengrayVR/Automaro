@@ -3,8 +3,8 @@
 class Ore : public IPlaceable
 {
 public:
-	Ore(World* world, std::string name, int count);
+	Ore(World* world, const ItemPrefab* prefab, int count);
 
-	void OnPlace() override;
-	void OnPickup() override;
+	virtual void OnPlace() override;
+	virtual void OnPickup() override;
 };

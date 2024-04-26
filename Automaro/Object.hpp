@@ -9,7 +9,6 @@ public:
 
 	Object(World* world, bool solid = false);
 
-
 	World* GetWorld() const;
 	bool IsSolid();
 	const Transform& GetTransform() const;

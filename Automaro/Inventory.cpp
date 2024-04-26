@@ -26,7 +26,12 @@ Inventory::~Inventory()
 
 void Inventory::Add(std::unique_ptr<Item> item)
 {
-	m_vItems.push_back(std::move(item));
+	int slot = FindItem(item.get());
+
+	if (slot == -1)
+		m_vItems.push_back(std::move(item));
+	else
+		GetItem(slot)->SetCount(GetItem(slot)->GetCount() + item->GetCount());
 }
 
 bool Inventory::Drop(int slot)
@@ -48,21 +53,34 @@ bool Inventory::Place(int slot)
 {
 	if (GetItems().size() == 0) return false;
 	
-	if (!GetItem(slot).get()->IsPlaceable())
+	if (!GetItem(slot)->IsPlaceable())
 	{
 		m_pPlayer->GetWorld()->GetGame()->GetPopupManager().ShowText("Can't place this");
 		return false;
 	}
 
+	std::unique_ptr<Item>& item = GetItem(slot);
+
 	// move selection if placing last item
-	if (slot == GetItems().size() - 1)
+	if (item->GetCount() - 1 <= 0 && slot == GetItems().size() - 1)
 		Select(slot - 1);
 
 	const auto& pos = m_pPlayer->GetTransform().GetPosition();
-	std::unique_ptr<Item> item = Release(slot);
-	m_pPlayer->GetWorld()->GetGame()->GetPopupManager().ShowText(std::format("Machine [{}] ({}) placed", item.get()->GetName(), item.get()->GetCount()));
-	
-	std::unique_ptr<IPlaceable> placeable(static_cast<IPlaceable*>(item.release()));
+	std::unique_ptr<IPlaceable> placeable;
+	item->SetCount(item->GetCount() - 1);
+
+	m_pPlayer->GetWorld()->GetGame()->GetPopupManager().ShowText(std::format("Machine [{}] placed", item->GetName()));
+
+	if (item->GetCount() < 1)
+	{
+		placeable = std::unique_ptr<IPlaceable>(static_cast<IPlaceable*>(Release(slot).release()));
+	}
+	else
+	{
+		placeable = item->CloneT<IPlaceable>();
+	}
+
+	placeable->SetCount(1);
 	m_pPlayer->GetWorld()->GetMap().AddPlaceable(std::move(placeable), pos);
 
 	return true;
@@ -116,6 +134,15 @@ std::vector<std::unique_ptr<Item>>& Inventory::GetItems()
 std::unique_ptr<Item>& Inventory::GetItem(int slot)
 {
 	return m_vItems[slot];
+}
+
+int Inventory::FindItem(Item* item)
+{
+	for (int i = 0; i < m_vItems.size(); i++)
+		if (item->IsSimilar(m_vItems[i].get()))
+			return i;
+
+	return -1;
 }
 
 void Inventory::Remove(std::unique_ptr<Item> item)

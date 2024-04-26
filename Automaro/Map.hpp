@@ -29,7 +29,7 @@ public:
 	[[nodiscard]]
 	std::unique_ptr<Object> Release(const Vector& pos, int slot);
 
-	void ScheduleRemovePlaceable(Object* placeable);
+	void RemovePlaceable(Object* placeable, bool schedule = true);
 
 private:
 	void RemovePlaceables();

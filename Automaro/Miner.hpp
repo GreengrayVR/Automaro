@@ -4,13 +4,15 @@
 class Miner : public IMachine
 {
 public:
-	Miner(World* world, float miningSpeed);
+	Miner(World* world, int count);
 	
-	void OnPlace() override;
-	void OnPickup() override;
-	void EarlyUpdate() override;
-	void OnComplete() override;
-	void LateUpdate() override;
+	virtual void OnPlace() override;
+	virtual void OnPickup() override;
+	virtual void EarlyUpdate() override;
+	virtual void OnComplete() override;
+	virtual void LateUpdate() override;
+
+	std::unique_ptr<Item> Clone() const;
 
 private:
 	Item* m_MinedItem;

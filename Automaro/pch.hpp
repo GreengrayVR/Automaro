@@ -12,11 +12,14 @@
 #include <cassert>
 #include <stack>
 #include <string>
-#include <locale>
-#include <codecvt>
 
 #include "../CMDGraphics/CMDGraphics/CMDGraphics.hpp"
 
+using Color = CMDGraphics::Color;
+using FGColor = Color::Foreground;
+using BGColor = Color::Background;
+
+#include "ItemPrefab.hpp"
 #include "Common.hpp"
 #include "IComponent.hpp"
 #include "Key.hpp"

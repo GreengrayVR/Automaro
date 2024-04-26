@@ -4,14 +4,14 @@
 class IPipe : public IPlaceable, public IWorkable
 {
 public:
-	IPipe(World* world, float transferSpeed);
+	IPipe(World* world, const ItemPipePrefab* prefab, int count);
 	virtual ~IPipe();
 
-	void OnPlace() override;
-	void OnPickup() override;
-	void EarlyUpdate() override;
-	void OnComplete() override;
-	void LateUpdate() override;
+	virtual void OnPlace() override;
+	virtual void OnPickup() override;
+	virtual void EarlyUpdate() override;
+	virtual void OnComplete() override;
+	virtual void LateUpdate() override;
 
 private:
 	void SetRepresentation(char value);
@@ -24,5 +24,4 @@ private:
 		{ Direction::LEFT, Vector::Left() },
 		{ Direction::RIGHT, Vector::Right() },
 	};
-	
 };

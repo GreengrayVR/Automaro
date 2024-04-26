@@ -5,7 +5,17 @@ enum class Direction : int
 	UP, DOWN, LEFT, RIGHT
 };
 
-class IWorkable
+class ItemIOContainer
+{
+public:
+	ItemIOContainer() = default;
+	ItemIOContainer(const ItemIOContainer& other);
+
+	std::unique_ptr<Item> m_ItemOutput;
+	std::unique_ptr<Item> m_ItemInput;
+};
+
+class IWorkable : protected ItemIOContainer
 {
 public:
 	IWorkable(World* world, int completeTime, Direction outputDir = Direction::UP);
@@ -34,8 +44,6 @@ public:
 	IWorkable* GetOutput();
 
 protected:
-	std::unique_ptr<Item> m_ItemOutput;
-	std::unique_ptr<Item> m_ItemInput;
 
 	IWorkable* m_Output;
 	std::vector<Direction> m_vDirectionOutput;

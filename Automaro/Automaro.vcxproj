@@ -146,6 +146,7 @@
     <ClCompile Include="IPlacebale.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemPipe.cpp" />
+    <ClCompile Include="ItemPrefab.cpp" />
     <ClCompile Include="IWorkable.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="IPlaceable.hpp" />
     <ClInclude Include="Item.hpp" />
     <ClInclude Include="ItemPipe.hpp" />
+    <ClInclude Include="ItemPrefab.hpp" />
     <ClInclude Include="IView.hpp" />
     <ClInclude Include="IWorkable.hpp" />
     <ClInclude Include="Key.hpp" />

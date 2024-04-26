@@ -17,6 +17,7 @@ public:
 
 	std::vector<std::unique_ptr<Item>>& GetItems();
 	std::unique_ptr<Item>& GetItem(int slot);
+	int FindItem(Item* item);
 
 	virtual void OnKeyDown(Key key) override;
 

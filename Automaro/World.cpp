@@ -11,13 +11,11 @@ World::World(Game* game, size_t width, size_t height)
 void World::Populate()
 {
 	m_pPlayer = static_cast<Player*>(GetMap().AddObject(std::move(std::make_unique<Player>(this)), { 5, 5 }));
-	m_pPlayer->GetInventory().Add(std::make_unique<Item>(this, "Iron Ingot", 3));
-	m_pPlayer->GetInventory().Add(std::make_unique<Item>(this, "Copper Ingot", 1));
-	m_pPlayer->GetInventory().Add(std::make_unique<Item>(this, "Gold Ingot", 1));
-	m_pPlayer->GetInventory().Add(std::make_unique<ItemPipe>(this, 1.f));
-	m_pPlayer->GetInventory().Add(std::make_unique<Miner>(this, 5.f));
+	m_pPlayer->GetInventory().Add(std::make_unique<Item>(this, &ItemPrefab_IronIngot, 1));
+	m_pPlayer->GetInventory().Add(std::make_unique<ItemPipe>(this, 4));
+	m_pPlayer->GetInventory().Add(std::make_unique<Miner>(this, 1));
 
-	GetMap().AddPlaceable(std::make_unique<Ore>(this, "Iron", 5), { 3 , 7 });
+	GetMap().AddPlaceable(std::make_unique<Ore>(this, &ItemPrefab_IronOre, 5), { 3 , 7 });
 }
 
 void World::Update(float deltaTime)

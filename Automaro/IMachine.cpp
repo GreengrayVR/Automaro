@@ -1,8 +1,8 @@
 #include "pch.hpp"
 #include "IMachine.hpp"
 
-IMachine::IMachine(World* world, std::string name, int count, int completeTime)
-	: IPlaceable(world, name, count)
+IMachine::IMachine(World* world, const ItemPrefab* prefab, int count, float completeTime)
+	: IPlaceable(world, prefab, count)
 	, IWorkable(world, completeTime)
 {
 }

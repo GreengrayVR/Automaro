@@ -7,7 +7,7 @@ class PopupManager
 public:
 	PopupManager();
 
-	void ShowText(const std::string& text);
+	void ShowText(const std::string& text, float time = 3.f);
 	void Update(float deltaTime);
 	bool IsVisible() const;
 
@@ -15,7 +15,6 @@ public:
 
 private:
 	TextToShow m_vTextToShow;
-	const float POPUP_END_TIME = 3.f;
 	bool m_bIsVisible = false;
 
 };

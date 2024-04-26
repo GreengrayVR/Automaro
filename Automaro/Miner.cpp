@@ -1,8 +1,9 @@
 #include "pch.hpp"
 #include "Miner.hpp"
 
-Miner::Miner(World* world, float miningSpeed)
-	: IMachine(world, "Miner", 1, miningSpeed)
+Miner::Miner(World* world, int count)
+	: IMachine(world, &MinerPrefab_Miner, count, MinerPrefab_Miner.GetMiningSpeed())
+	, m_MinedItem(nullptr)
 {
 	FindComponent<ViewASCII>()->SetRepresentation('M');
 }
@@ -26,7 +27,7 @@ void Miner::OnComplete()
 	}
 	else
 	{
-		m_ItemOutput = std::unique_ptr<Item>(new Item(*m_MinedItem));
+		m_ItemOutput = m_MinedItem->CloneT<Item>();
 		m_ItemOutput->SetCount(0);
 		if (!m_ItemOutput->Transfer(m_MinedItem, 1))
 		{
@@ -41,6 +42,12 @@ void Miner::LateUpdate()
 {
 }
 
+std::unique_ptr<Item> Miner::Clone() const
+{
+	return std::make_unique<std::decay_t<decltype(*this)>>(*this);
+}
+
+
 void Miner::OnPlace()
 {
 	Reset();
@@ -48,5 +55,5 @@ void Miner::OnPlace()
 
 void Miner::OnPickup()
 {
-	GetWorld()->GetMap().ScheduleRemovePlaceable(this);
+	GetWorld()->GetMap().RemovePlaceable(this);
 }

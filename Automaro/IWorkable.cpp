@@ -74,7 +74,7 @@ bool IWorkable::TransferOutput(int count)
 
 	if (!output)
 	{
-		m_Output->SetInput(std::unique_ptr<Item>(new Item(*input.get())));
+		m_Output->SetInput(input->CloneT<Item>());
 		output = m_Output->GetItemInput();
 		output->SetCount(0);
 	}
@@ -112,4 +112,12 @@ void IWorkable::SetInput(std::unique_ptr<Item> input)
 IWorkable* IWorkable::GetOutput()
 {
 	return m_Output;
+}
+
+ItemIOContainer::ItemIOContainer(const ItemIOContainer& other)
+{
+	if (other.m_ItemInput)
+		m_ItemInput = other.m_ItemInput->CloneT<Item>();
+	if (other.m_ItemOutput)
+		m_ItemOutput = other.m_ItemOutput->CloneT<Item>();
 }

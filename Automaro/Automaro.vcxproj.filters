@@ -82,6 +82,9 @@
     <ClCompile Include="IWorkable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ItemPrefab.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.hpp">
@@ -161,6 +164,9 @@
     </ClInclude>
     <ClInclude Include="ItemPipe.hpp" />
     <ClInclude Include="IWorkable.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemPrefab.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

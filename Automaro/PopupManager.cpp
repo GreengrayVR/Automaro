@@ -5,9 +5,9 @@ PopupManager::PopupManager()
 {
 }
 
-void PopupManager::ShowText(const std::string& text)
+void PopupManager::ShowText(const std::string& text, float time)
 {
-	m_vTextToShow.push_back(std::make_pair(text, POPUP_END_TIME));
+	m_vTextToShow.push_back(std::make_pair(text, time));
 	m_bIsVisible = true;
 }
 
