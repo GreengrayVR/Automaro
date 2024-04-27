@@ -104,15 +104,6 @@ bool Inventory::PickUp()
 		if (IPlaceable* placeable = dynamic_cast<IPlaceable*>(it.Get()))
 			placeable->OnPickup();
 
-		// void everything inside of the machine
-		if (IWorkable* workable = dynamic_cast<IWorkable*>(it.Get()))
-		{
-			(void)workable->TransferInput();
-			(void)workable->TransferOutput();
-			workable->SetInput(nullptr);
-			workable->SetOutput(nullptr);
-		}
-
 		Add(it.Release());
 		popup.ShowText("Item picked up!");
 		return true;

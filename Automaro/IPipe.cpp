@@ -44,11 +44,15 @@ void IPipe::OnPickup()
 		m_Input->SetOutput(nullptr);
 		m_Input = nullptr;
 	}
+
 	if (m_Output)
 	{
 		m_Output->SetOutput(nullptr);
 		m_Output = nullptr;
 	}
+
+	m_ItemInput.reset();
+	m_ItemOutput.reset();
 }
 
 void IPipe::EarlyUpdate()
