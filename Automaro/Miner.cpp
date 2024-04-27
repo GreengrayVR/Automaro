@@ -18,21 +18,15 @@ void Miner::EarlyUpdate()
 
 void Miner::OnComplete()
 {
-	if (m_ItemOutput)
-	{
-		if (!m_ItemOutput->Transfer(m_MinedItem, 1)) // TODO: reverse transfer
-		{
-			(void)GetWorld()->GetMap().Release(m_MinedItem->GetTransform().GetPosition(), 0);
-		}
-	}
-	else
+	if (!m_ItemOutput)
 	{
 		m_ItemOutput = m_MinedItem->CloneT<Item>();
 		m_ItemOutput->SetCount(0);
-		if (!m_ItemOutput->Transfer(m_MinedItem, 1))
-		{
-			(void)GetWorld()->GetMap().Release(m_MinedItem->GetTransform().GetPosition(), 0);
-		}
+	}
+	
+	if (!m_ItemOutput->Transfer(m_MinedItem, 1)) // TODO: reverse transfer
+	{
+		(void)GetWorld()->GetMap().Release(m_MinedItem->GetTransform().GetPosition(), 0);
 	}
 
 	TransferOutput(1);

@@ -89,6 +89,7 @@ bool Inventory::Place(int slot)
 bool Inventory::PickUp()
 {
 	Map& map = m_pPlayer->GetWorld()->GetMap();
+	PopupManager& popup = m_pPlayer->GetWorld()->GetGame()->GetPopupManager();
 	const auto& pos = m_pPlayer->GetTransform().GetPosition();
 	ObjectIterator<Item> it = map.GetObjectIteratorInCell<Item>(pos);
 
@@ -96,15 +97,24 @@ bool Inventory::PickUp()
 	{
 		if (!it.Get()->IsPickupable())
 		{
-			m_pPlayer->GetWorld()->GetGame()->GetPopupManager().ShowText("Item can't be picked up!");
+			popup.ShowText("Item can't be picked up!");
 			return false;
 		}
 
 		if (IPlaceable* placeable = dynamic_cast<IPlaceable*>(it.Get()))
 			placeable->OnPickup();
 
+		// void everything inside of the machine
+		if (IWorkable* workable = dynamic_cast<IWorkable*>(it.Get()))
+		{
+			(void)workable->TransferInput();
+			(void)workable->TransferOutput();
+			workable->SetInput(nullptr);
+			workable->SetOutput(nullptr);
+		}
+
 		Add(it.Release());
-		m_pPlayer->GetWorld()->GetGame()->GetPopupManager().ShowText("Item picked up!");
+		popup.ShowText("Item picked up!");
 		return true;
 	}
 

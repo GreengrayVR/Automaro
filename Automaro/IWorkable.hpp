@@ -32,20 +32,23 @@ public:
 	virtual void OnComplete() = 0;
 	virtual void LateUpdate() = 0;
 
+	std::unique_ptr<Item> TransferInput();
 	std::unique_ptr<Item> TransferOutput();
 	bool TransferOutput(int count);
 	
-	Item* GetItemOutput();
 	Item* GetItemInput();
+	Item* GetItemOutput();
+	void SetItemInput(std::unique_ptr<Item> input);
 
+	void SetInput(IWorkable* output);
 	void SetOutput(IWorkable* output);
-	void SetInput(std::unique_ptr<Item> input);
 
 	IWorkable* GetOutput();
 
 protected:
 
 	IWorkable* m_Output;
+	IWorkable* m_Input;
 	std::vector<Direction> m_vDirectionOutput;
 
 private:

@@ -12,10 +12,10 @@ void World::Populate()
 {
 	m_pPlayer = static_cast<Player*>(GetMap().AddObject(std::move(std::make_unique<Player>(this)), { 5, 5 }));
 	m_pPlayer->GetInventory().Add(std::make_unique<Item>(this, &ItemPrefab_IronIngot, 1));
-	m_pPlayer->GetInventory().Add(std::make_unique<ItemPipe>(this, 4));
+	m_pPlayer->GetInventory().Add(std::make_unique<ItemPipe>(this, 10));
 	m_pPlayer->GetInventory().Add(std::make_unique<Miner>(this, 1));
 
-	GetMap().AddPlaceable(std::make_unique<Ore>(this, &ItemPrefab_IronOre, 5), { 3 , 7 });
+	GetMap().AddPlaceable(std::make_unique<Ore>(this, &ItemPrefab_IronOre, 5), { 3 , 9 });
 }
 
 void World::Update(float deltaTime)

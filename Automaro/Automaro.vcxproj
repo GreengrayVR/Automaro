@@ -143,7 +143,6 @@
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="IPlaceable.cpp" />
-    <ClCompile Include="IPlacebale.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemPipe.cpp" />
     <ClCompile Include="ItemPrefab.cpp" />

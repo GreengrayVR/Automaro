@@ -64,9 +64,6 @@
     <ClCompile Include="Miner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="IPlacebale.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="IPlaceable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

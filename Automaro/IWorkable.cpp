@@ -60,6 +60,11 @@ void IWorkable::Reset()
 	m_fTime = m_fTimeToComplete;
 }
 
+std::unique_ptr<Item> IWorkable::TransferInput()
+{
+	return std::move(m_ItemInput);
+}
+
 std::unique_ptr<Item> IWorkable::TransferOutput()
 {
 	return std::move(m_ItemOutput);
@@ -74,7 +79,7 @@ bool IWorkable::TransferOutput(int count)
 
 	if (!output)
 	{
-		m_Output->SetInput(input->CloneT<Item>());
+		m_Output->SetItemInput(input->CloneT<Item>());
 		output = m_Output->GetItemInput();
 		output->SetCount(0);
 	}
@@ -99,12 +104,17 @@ Item* IWorkable::GetItemInput()
 	return m_ItemInput.get();
 }
 
+void IWorkable::SetInput(IWorkable* input)
+{
+	m_Input = input;
+}
+
 void IWorkable::SetOutput(IWorkable* output)
 {
 	m_Output = output;
 }
 
-void IWorkable::SetInput(std::unique_ptr<Item> input)
+void IWorkable::SetItemInput(std::unique_ptr<Item> input)
 {
 	m_ItemInput = std::move(input);
 }
