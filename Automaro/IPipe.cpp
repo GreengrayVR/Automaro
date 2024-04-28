@@ -24,12 +24,19 @@ void IPipe::OnPlace()
 		auto placeable = map.GetPlaceable(pos + dir.second);
 		if (m_Input = dynamic_cast<IWorkable*>(placeable))
 		{
+			if (dynamic_cast<IPipe*>(placeable))
+			{
+				GetWorld()->GetGame()->GetPopupManager().ShowText("connected to pipe", 1.f);
+			}
+
+
 			m_Input->SetOutput(this);
 
 			if (dir.first == Direction::UP || dir.first == Direction::DOWN)
 				m_View->SetRepresentation('|');
 			if (dir.first == Direction::LEFT || dir.first == Direction::RIGHT)
 				m_View->SetRepresentation('-');
+
 			return;
 		}
 	}
@@ -37,7 +44,11 @@ void IPipe::OnPlace()
 
 void IPipe::OnPickup()
 {
+
 	GetWorld()->GetMap().RemovePlaceable(this, false);
+
+	if (m_View) 
+		m_View->SetRepresentation('.');
 
 	if (m_Input)
 	{
