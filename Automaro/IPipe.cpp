@@ -29,7 +29,6 @@ void IPipe::OnPlace()
 				GetWorld()->GetGame()->GetPopupManager().ShowText("connected to pipe", 1.f);
 			}
 
-
 			m_Input->SetOutput(this);
 
 			if (dir.first == Direction::UP || dir.first == Direction::DOWN)
@@ -44,11 +43,9 @@ void IPipe::OnPlace()
 
 void IPipe::OnPickup()
 {
-
 	GetWorld()->GetMap().RemovePlaceable(this, false);
 
-	if (m_View) 
-		m_View->SetRepresentation('.');
+	SetRepresentation('.');
 
 	if (m_Input)
 	{
@@ -68,7 +65,8 @@ void IPipe::OnPickup()
 
 void IPipe::EarlyUpdate()
 {
-	m_View->SetBackgroundColor(m_ItemInput.get() != nullptr ? BGColor::Red : BGColor::Black);
+	if (m_View)
+		m_View->SetBackgroundColor(m_ItemInput.get() != nullptr ? BGColor::Red : BGColor::Black);
 	SetRunning(m_ItemInput.get() != nullptr);
 }
 
@@ -80,7 +78,6 @@ void IPipe::OnComplete()
 	m_ItemOutput = std::move(m_ItemInput);
 
 	TransferOutput(1);
-	GetWorld()->GetGame()->GetPopupManager().ShowText("pipe update", .7f);
 }
 
 void IPipe::LateUpdate()
@@ -89,5 +86,6 @@ void IPipe::LateUpdate()
 
 void IPipe::SetRepresentation(char value)
 {
-	m_View->SetRepresentation(value);
+	if (m_View)
+		m_View->SetRepresentation(value);
 }
