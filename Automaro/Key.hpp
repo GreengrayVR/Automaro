@@ -9,4 +9,5 @@ enum class Key
 	C = 'C',
 	E = 'E',
 	Q = 'Q',
+	F = 'F',
 };

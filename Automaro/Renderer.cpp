@@ -30,8 +30,8 @@ bool Renderer::DrawPopup(CMDGraphics::Frame& frame, World& world, float deltaTim
 
 	if (!popupManager.IsVisible()) return true;
 
-	int x = frame.Size().x / 2;
-	int y = frame.Size().y / 2;
+	int x = 10;
+	int y = 10;
 
 	frame.WriteF(x, y, "Popup:");
 
@@ -120,17 +120,21 @@ bool Renderer::DrawTooltip(CMDGraphics::Frame& frame, World& world) const
 
 		if (machine)
 		{
-			frame.WriteF("Completed [{:.2f}/{:.2f}]\n", machine->GetTime(), machine->GetTimeToComplete());
-
-			Item* output = machine->GetItemOutput();
-			if (output)
+			frame.WriteF("Press F to start\n");
+			if (machine->GetEnabled())
 			{
-				frame.WriteF("Storage:\n");
-				frame.WriteF(
-					"{} [{}]\n",
-					output->GetName(),
-					output->GetCount()
-				);
+				frame.WriteF("Completed [{:.2f}/{:.2f}]\n", machine->GetTime(), machine->GetTimeToComplete());
+
+				Item* output = machine->GetItemOutput();
+				if (output)
+				{
+					frame.WriteF("Storage:\n");
+					frame.WriteF(
+						"{} [{}]\n",
+						output->GetName(),
+						output->GetCount()
+					);
+				}
 			}
 		}
 		else if (pipe)

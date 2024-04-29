@@ -6,6 +6,7 @@ IPipe::IPipe(World* world, const ItemPipePrefab* prefab, int count)
 	, IWorkable(world, prefab->GetTransferSpeed())
 	, m_View(nullptr)
 {
+	SetEnabled(true);
 }
 
 IPipe::~IPipe()

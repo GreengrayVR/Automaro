@@ -6,6 +6,9 @@ IWorkable::IWorkable(World* world, int completeTime, Direction outputDir)
 	, m_fTimeToComplete(completeTime)
 	, m_fTime(completeTime)
 	, m_bIsRunning(false)
+	, m_bEnabled(false)
+	, m_Input(nullptr)
+	, m_Output(nullptr)
 {
 }
 
@@ -15,6 +18,8 @@ IWorkable::~IWorkable()
 
 void IWorkable::Update(float deltaTime)
 {
+	if (!GetEnabled()) return;
+
 	EarlyUpdate();
 
 	if (!IsRunning()) return;
@@ -112,6 +117,16 @@ void IWorkable::SetInput(IWorkable* input)
 void IWorkable::SetOutput(IWorkable* output)
 {
 	m_Output = output;
+}
+
+bool IWorkable::GetEnabled()
+{
+	return m_bEnabled;
+}
+
+void IWorkable::SetEnabled(bool value)
+{
+	m_bEnabled = value;
 }
 
 void IWorkable::SetItemInput(std::unique_ptr<Item> input)

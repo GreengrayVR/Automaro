@@ -43,6 +43,9 @@ public:
 	void SetInput(IWorkable* output);
 	void SetOutput(IWorkable* output);
 
+	bool GetEnabled();
+	void SetEnabled(bool value);
+
 	IWorkable* GetOutput();
 
 protected:
@@ -55,6 +58,7 @@ private:
 	float m_fTimeToComplete;
 	float m_fTime;
 	bool m_bIsRunning;
+	bool m_bEnabled;
 
 	World* m_pWorld;
 };

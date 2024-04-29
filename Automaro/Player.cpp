@@ -16,6 +16,7 @@ Player::Player(World* world)
 	inputManager.AddKeyboardHandler(Key::D, this);
 	inputManager.AddKeyboardHandler(Key::Q, this);
 	inputManager.AddKeyboardHandler(Key::E, this);
+	inputManager.AddKeyboardHandler(Key::F, this);
 }
 
 Player::~Player()
@@ -27,6 +28,7 @@ Player::~Player()
 	inputManager.RemoveKeyboardHandler(Key::D, this);
 	inputManager.RemoveKeyboardHandler(Key::Q, this);
 	inputManager.RemoveKeyboardHandler(Key::E, this);
+	inputManager.RemoveKeyboardHandler(Key::F, this);
 }
 
 void Player::Move(Key direction)
@@ -60,6 +62,22 @@ void Player::OnKeyDown(Key key)
 	else if (key == Key::E)
 	{
 		GetInventory().ToggleView();
+	}
+	else if (key == Key::F)
+	{
+		const Vector& pos = GetTransform().GetPosition();
+		ObjectIterator<IMachine> it = GetWorld()->GetMap().GetObjectIteratorInCell<IMachine>(pos);
+		if (!it.Next()) return;
+
+		IMachine* machine = it.Get();
+		machine->SetEnabled(!machine->GetEnabled());
+		GetWorld()->GetGame()->GetPopupManager().ShowText(
+			std::format(
+				"Machine {} {}",
+				machine->GetName(), 
+				machine->GetEnabled() ? "enabled" : "disabled"
+			)
+		);
 	}
 }
 
