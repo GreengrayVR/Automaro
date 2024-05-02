@@ -8,10 +8,12 @@ void Renderer::Draw(World& world, float deltaTime)
 	DrawDebug(frame, world, deltaTime);
 	if (DrawInventory(frame, world))
 	{
+		DrawHotbar(frame, world);
 		DrawPopup(frame, world, deltaTime);
 		return;
 	}
 	DrawTerrain(frame, world);
+	DrawHotbar(frame, world);
 	DrawPopup(frame, world, deltaTime);
 	DrawTooltip(frame, world);
 }
@@ -44,10 +46,9 @@ bool Renderer::DrawPopup(CMDGraphics::Frame& frame, World& world, float deltaTim
 bool Renderer::DrawTerrain(CMDGraphics::Frame& frame, World& world) const
 {
 	frame.WriteF("Keys:\n");
-	frame.WriteF("WASD: Move | Q: Pickup | E: Inventory\n\n");
+	frame.WriteF("WASD: Move | Q: Pickup | E: Inventory | 123456: Hotbar select\n\n");
 
 	Map& map = world.GetMap();
-
 
 	for (int y = 0; y < map.GetHeight(); y++)
 	{
@@ -167,7 +168,7 @@ bool Renderer::DrawInventory(CMDGraphics::Frame& frame, World& world) const
 	auto selected = inventory.GetSelected();
 	
 	frame.WriteF("Keys:\n");
-	frame.WriteF("W: Up | S: Down | D: Drop | C: Exit | A: Place Machine\n\n");
+	frame.WriteF("W: Up | S: Down | D: Drop | C: Exit | A: Place Machine | 123456: Set to hotbar\n\n");
 
 	frame.WriteF("Inventory {} item(s):\n\n", inventory.GetItems().size());
 
@@ -184,5 +185,40 @@ bool Renderer::DrawInventory(CMDGraphics::Frame& frame, World& world) const
 		);
 	}
 	frame.WriteF("\n\n");
+	return true;
+}
+
+bool Renderer::DrawHotbar(CMDGraphics::Frame& frame, World& world) const
+{
+	Inventory& inventory = world.GetPlayer()->GetInventory();
+	Hotbar& hotbar = inventory.GetHotbar();
+	int slot = hotbar.GetSelectedItem().first;
+	Item* item = hotbar.GetSelectedItem().second;
+
+	/*
+		+--------------------+
+		| [x][.][x][x][.][.] |
+		|        ^           |
+		| Item Pipe (1)		 |
+		+--------------------+
+	*/
+
+
+	if (item)
+		frame.WriteF("Hotbar select: {} ({})\n", item->GetName(), item->GetCount());
+	else
+		frame.WriteF("\n");
+	frame.WriteF("+--------------------+\n");
+	frame.WriteF("| ");
+
+	for (int i = 0; i < hotbar.Size(); i++)
+		frame.WriteF("[{}]", hotbar.GetItem(i) == nullptr ? "." : "x");
+	frame.WriteF(" |\n|  ");
+	for (int i = 0; i < hotbar.Size() * 3; i++)
+		frame.Write(i == slot * 3 ? '^' : ' ');
+
+	frame.WriteF("|\n");
+	frame.WriteF("+--------------------+\n");
+
 	return true;
 }

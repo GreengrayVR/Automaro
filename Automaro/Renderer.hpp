@@ -12,6 +12,7 @@ private:
 	bool DrawTerrain(CMDGraphics::Frame& frame, World& world) const;
 	bool DrawTooltip(CMDGraphics::Frame& frame, World& world) const;
 	bool DrawInventory(CMDGraphics::Frame& frame, World& world) const;
+	bool DrawHotbar(CMDGraphics::Frame& frame, World& world) const;
 	
 	CMDGraphics::Graphics m_Gfx;
 };

@@ -3,6 +3,7 @@
 
 Inventory::Inventory(Player* player)
 	: m_pPlayer(player)
+	, m_Hotbar(this)
 {
 	SetPriority(1);
 
@@ -12,6 +13,12 @@ Inventory::Inventory(Player* player)
 	inputManager.AddKeyboardHandler(Key::C, this);
 	inputManager.AddKeyboardHandler(Key::D, this);
 	inputManager.AddKeyboardHandler(Key::A, this);
+	inputManager.AddKeyboardHandler(Key::Alpha1, this);
+	inputManager.AddKeyboardHandler(Key::Alpha2, this);
+	inputManager.AddKeyboardHandler(Key::Alpha3, this);
+	inputManager.AddKeyboardHandler(Key::Alpha4, this);
+	inputManager.AddKeyboardHandler(Key::Alpha5, this);
+	inputManager.AddKeyboardHandler(Key::Alpha6, this);
 }
 
 Inventory::~Inventory()
@@ -22,6 +29,12 @@ Inventory::~Inventory()
 	inputManager.RemoveKeyboardHandler(Key::C, this);
 	inputManager.RemoveKeyboardHandler(Key::D, this);
 	inputManager.RemoveKeyboardHandler(Key::A, this);
+	inputManager.RemoveKeyboardHandler(Key::Alpha1, this);
+	inputManager.RemoveKeyboardHandler(Key::Alpha2, this);
+	inputManager.RemoveKeyboardHandler(Key::Alpha3, this);
+	inputManager.RemoveKeyboardHandler(Key::Alpha4, this);
+	inputManager.RemoveKeyboardHandler(Key::Alpha5, this);
+	inputManager.RemoveKeyboardHandler(Key::Alpha6, this);
 }
 
 void Inventory::Add(std::unique_ptr<Item> item)
@@ -49,14 +62,14 @@ bool Inventory::Drop(int slot)
 	return true;
 }
 
-bool Inventory::Place(int slot)
+PlaceOperation Inventory::Place(int slot)
 {
-	if (GetItems().size() == 0) return false;
+	if (GetItems().size() == 0) return PlaceOperation::Error;
 	
 	if (!GetItem(slot)->IsPlaceable())
 	{
 		m_pPlayer->GetWorld()->GetGame()->GetPopupManager().ShowText("Can't place this");
-		return false;
+		return PlaceOperation::Error;
 	}
 
 	std::unique_ptr<Item>& item = GetItem(slot);
@@ -74,16 +87,17 @@ bool Inventory::Place(int slot)
 	if (item->GetCount() < 1)
 	{
 		placeable = std::unique_ptr<IPlaceable>(static_cast<IPlaceable*>(Release(slot).release()));
+		placeable->SetCount(1);
+		m_pPlayer->GetWorld()->GetMap().AddPlaceable(std::move(placeable), pos);
+		return PlaceOperation::PlacedAndEmpty;
 	}
 	else
 	{
 		placeable = item->CloneT<IPlaceable>();
+		placeable->SetCount(1);
+		m_pPlayer->GetWorld()->GetMap().AddPlaceable(std::move(placeable), pos);
+		return PlaceOperation::Placed;
 	}
-
-	placeable->SetCount(1);
-	m_pPlayer->GetWorld()->GetMap().AddPlaceable(std::move(placeable), pos);
-
-	return true;
 }
 
 bool Inventory::PickUp()
@@ -127,6 +141,11 @@ void Inventory::ToggleView()
 		m_pPlayer->GetWorld()->GetGame()->GetInputManager().PopPriority();
 }
 
+Hotbar& Inventory::GetHotbar()
+{
+	return m_Hotbar;
+}
+
 std::vector<std::unique_ptr<Item>>& Inventory::GetItems()
 {
 	return m_vItems;
@@ -139,6 +158,8 @@ std::unique_ptr<Item>& Inventory::GetItem(int slot)
 
 int Inventory::FindItem(Item* item)
 {
+	if (item == nullptr) return -1;
+
 	for (int i = 0; i < m_vItems.size(); i++)
 		if (item->IsSimilar(m_vItems[i].get()))
 			return i;
@@ -214,4 +235,16 @@ void Inventory::OnKeyDown(Key key)
 		Drop(GetSelected().first);
 	else if (key == Key::A)
 		Place(GetSelected().first);
+	else if (key == Key::Alpha1)
+		GetHotbar().SetItem(GetSelected().second, 0);
+	else if (key == Key::Alpha2)
+		GetHotbar().SetItem(GetSelected().second, 1);
+	else if (key == Key::Alpha3)
+		GetHotbar().SetItem(GetSelected().second, 2);
+	else if (key == Key::Alpha4)
+		GetHotbar().SetItem(GetSelected().second, 3);
+	else if (key == Key::Alpha5)
+		GetHotbar().SetItem(GetSelected().second, 4);
+	else if (key == Key::Alpha6)
+		GetHotbar().SetItem(GetSelected().second, 5);
 }

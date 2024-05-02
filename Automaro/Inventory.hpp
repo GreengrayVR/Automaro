@@ -1,6 +1,15 @@
 #pragma once
+#include <array>
+#include "Hotbar.hpp"
 
 class Player; // delete
+
+enum class PlaceOperation
+{
+	Error,
+	Placed,
+	PlacedAndEmpty,
+};
 
 class Inventory : public IKeyboardHandler
 {
@@ -10,10 +19,12 @@ public:
 
 	void Add(std::unique_ptr<Item> item);
 	bool Drop(int slot);
-	bool Place(int slot);
+	PlaceOperation Place(int slot);
 	bool PickUp();
 	bool IsVisible();
 	void ToggleView();
+
+	Hotbar& GetHotbar();
 
 	std::vector<std::unique_ptr<Item>>& GetItems();
 	std::unique_ptr<Item>& GetItem(int slot);
@@ -31,9 +42,9 @@ private:
 	void Select(int slot);
 	void SelectNext();
 	void SelectPrev();
-
 	const Player* m_pPlayer;
 	std::vector<std::unique_ptr<Item>> m_vItems;
+	Hotbar m_Hotbar;
 
 	bool m_bIsVisible = false;
 	int m_iSelectedIndex = 0;

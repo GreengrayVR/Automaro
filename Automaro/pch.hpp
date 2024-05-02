@@ -46,3 +46,4 @@ using BGColor = Color::Background;
 #include "Miner.hpp"
 #include "IPipe.hpp"
 #include "ItemPipe.hpp"
+#include "Hotbar.hpp"

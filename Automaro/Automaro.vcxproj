@@ -135,6 +135,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Hotbar.cpp" />
     <ClCompile Include="IPipe.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="IMachine.cpp" />
@@ -166,6 +167,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.hpp" />
+    <ClInclude Include="Hotbar.hpp" />
     <ClInclude Include="IPipe.hpp" />
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="IMachine.hpp" />

@@ -82,6 +82,9 @@
     <ClCompile Include="ItemPrefab.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Hotbar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.hpp">
@@ -159,11 +162,16 @@
     <ClInclude Include="IPipe.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="ItemPipe.hpp" />
     <ClInclude Include="IWorkable.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="ItemPrefab.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Hotbar.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemPipe.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
